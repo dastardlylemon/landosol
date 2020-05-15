@@ -1,34 +1,24 @@
 import Sequelize from 'sequelize';
 
-export const characterOptions = (models) => ({
-  attributes: [
-    'id',
-    'name',
-    'kanaName',
-    'isLimited',
-    'rarity',
-    'characterProfile.age',
-    'characterProfile.race',
-    'characterProfile.height',
-    'characterProfile.weight',
-    'characterProfile.favorite',
-    'characterProfile.voice',
-    [Sequelize.col('characterProfile.guild_id'), 'guildId'],
-  ],
-  include: [{
-    model: models.CharacterProfile,
-    attributes: [],
-  }],
-  raw: true,
-});
+async function getCharacter(charModel) {
+  const charData = charModel.get({ plain: true });
+  const charProfile = await charModel.getCharacterProfile();
+  return {
+    ...charData,
+    ...(charProfile?.get({ plain: true }) || []),
+  };
+}
 
 export default {
   Query: {
     character: async (_, { id }: { id: string }, { models }) => {
-      return await models.Character.findByPk(id, characterOptions(models));
+      const charModel = await models.Character.findByPk(id);
+      return await getCharacter(charModel);
     },
     characters: async (_1, _2, { models }) => {
-      return await models.Character.findAll(characterOptions(models));
+      const charModels = await models.Character.findAll();
+      const res = charModels.map(getCharacter);
+      return await Promise.all(res);
     },
   },
 
