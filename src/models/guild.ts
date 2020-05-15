@@ -14,10 +14,6 @@ const guild = (sequelize, DataTypes) => {
     tableName: 'guild',
   });
 
-  Guild.associate = (models) => {
-    Guild.hasMany(models.Character);
-  };
-
   return Guild;
 };
 

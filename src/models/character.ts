@@ -9,32 +9,22 @@ const character = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       field: 'unit_name',
     },
-    race: DataTypes.STRING,
-    height: DataTypes.STRING,
-    weight: DataTypes.STRING,
-    bloodType: {
+    kanaName: {
       type: DataTypes.STRING,
-      field: 'blood_type',
+      field: 'kana',
     },
-    interest: {
-      type: DataTypes.STRING,
-      field: 'favorite',
-    } ,
-    voice: DataTypes.STRING,
-    catchCopy: {
-      type: DataTypes.STRING,
-      field: 'catch_copy',
+    isLimited: {
+      type: DataTypes.INTEGER,
+      field: 'is_limited',
     },
-    guildId: {
-      type: DataTypes.STRING,
-      field: 'guild_id',
-    },
+    rarity: DataTypes.INTEGER,
+    comment: DataTypes.STRING,
   }, {
-    tableName: 'unit_profile',
+    tableName: 'unit_data',
   });
 
   Character.associate = (models) => {
-    Character.belongsTo(models.Guild);
+    Character.hasOne(models.CharacterProfile, { foreignKey: 'unit_id' });
   };
 
   return Character;

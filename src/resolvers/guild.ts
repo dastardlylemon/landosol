@@ -12,8 +12,12 @@ export default {
     members: async (guild, _, { models }) => {
       return await models.Character.findAll({
         where: {
-          guildId: guild.id,
+          '$characterProfile.guild_id$': guild.id,
         },
+        include: [{
+          model: models.CharacterProfile,
+          as: 'characterProfile',
+        }],
       });
     },
   },

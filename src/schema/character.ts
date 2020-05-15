@@ -9,13 +9,15 @@ export default gql`
   type Character {
     id: ID!
     name: String!
+    kanaName: String
     age: String
     guild: Guild
     race: String
     height: String
     weight: String
     bloodType: String
-    interest: String
+    isLimited: Int
+    favorite: String
     voice: String
     catchCopy: String
   }
