@@ -1,16 +1,16 @@
 export default {
   Query: {
-    character: (_, { id }: { id: string }, { models }) => {
-      return models.characters[id];
+    character: async (_, { id }: { id: string }, { models }) => {
+      return await models.Character.findByPk(id);
     },
-    characters: (_1, _2, { models }) => {
-      return Object.values(models.characters);
+    characters: async (_1, _2, { models }) => {
+      return await models.Character.findAll();
     },
   },
 
   Character: {
-    guild: (character, _, { models }) => {
-      return models.guilds[character.guildId];
+    guild: async (character, _, { models }) => {
+      return await models.Guild.findByPk(character.guildId);
     },
   },
 };

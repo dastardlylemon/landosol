@@ -8,10 +8,9 @@ export default gql`
 
   type Guild {
     id: ID!
-    name: String!
+    name: String
     description: String
     members: [Character!]
-    leader: Character
   }
 `;
 

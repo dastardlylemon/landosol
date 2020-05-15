@@ -1,24 +1,25 @@
-const characters = {
-  1: {
-    id: '1',
-    name: 'Pecorine',
-    guildId: '1',
+import { Sequelize } from 'sequelize';
+
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: `${__dirname}/../db/redive_jp.db`,
+  define: {
+    timestamps: false,
   },
-  2: {
-    id: '2',
-    name: 'Kyaru',
-    guildId: '1',
-  },
+});
+
+console.log(__dirname);
+
+const models = {
+  Character: sequelize.import('./character'),
+  Guild: sequelize.import('./guild'),
 };
 
-const guilds = {
-  1: {
-    id: '1',
-    name: '美食殿',
-    description: '特別な飲食店に入店するため、ペコリーヌが結成したギルド。主な目的は食べ歩き。',
-    leaderId: '1058',
-    memberIds: ['1', '2'],
-  },
-};
+Object.keys(models).forEach(key => {
+  if ('associate' in models[key]) {
+    models[key].associate(models);
+  }
+});
 
-export default { characters, guilds };
+export { sequelize };
+export default models;

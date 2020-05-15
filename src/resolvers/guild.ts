@@ -1,19 +1,20 @@
 export default {
   Query: {
-    guild: (_, { id }: { id: string }, { models }) => {
-      return models.guilds[id];
+    guild: async (_, { id }: { id: string }, { models }) => {
+      return await models.Guild.findByPk(id);
     },
-    guilds: (_1, _2, { models }) => {
-      return Object.values(models.guilds);
+    guilds: async (_1, _2, { models }) => {
+      return await models.Guild.findAll();
     },
   },
 
   Guild: {
-    leader: (guild, _, { models }) => {
-      return models.characters[guild.leaderId];
-    },
-    members: (guild, _, { models }) => {
-      return Object.values(models.characters).filter((character) => character.guildId === guild.id);
+    members: async (guild, _, { models }) => {
+      return await models.Character.findAll({
+        where: {
+          guildId: guild.id,
+        },
+      });
     },
   },
 };
