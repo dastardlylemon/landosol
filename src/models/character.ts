@@ -19,9 +19,21 @@ const character = (sequelize, DataTypes) => {
     },
     rarity: DataTypes.INTEGER,
     comment: DataTypes.STRING,
+    prefabId: {
+      type: DataTypes.INTEGER,
+      field: 'prefab_id',
+    },
+    picture: {
+      type: DataTypes.VIRTUAL,
+      get(): string {
+        return `https://redive.estertion.win/icon/unit/${this.getDataValue('prefabId') + 10}.webp`;
+      },
+    },
   }, {
     tableName: 'unit_data',
   });
+
+
 
   Character.associate = (models) => {
     Character.hasOne(models.CharacterProfile, { foreignKey: 'unit_id' });

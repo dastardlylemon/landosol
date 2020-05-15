@@ -20,6 +20,7 @@ export default gql`
     favorite: String
     voice: String
     catchCopy: String
+    picture: String
   }
 `;
 
