@@ -9,7 +9,15 @@ export default gql`
   type Character {
     id: ID!
     name: String!
+    age: String
     guild: Guild
+    race: String
+    height: String
+    weight: String
+    bloodType: String
+    interest: String
+    voice: String
+    catchCopy: String
   }
 `;
 

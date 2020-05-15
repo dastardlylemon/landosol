@@ -104,3 +104,4 @@ dist
 .tern-port
 
 db
+.DS_Store

@@ -9,6 +9,22 @@ const character = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       field: 'unit_name',
     },
+    race: DataTypes.STRING,
+    height: DataTypes.STRING,
+    weight: DataTypes.STRING,
+    bloodType: {
+      type: DataTypes.STRING,
+      field: 'blood_type',
+    },
+    interest: {
+      type: DataTypes.STRING,
+      field: 'favorite',
+    } ,
+    voice: DataTypes.STRING,
+    catchCopy: {
+      type: DataTypes.STRING,
+      field: 'catch_copy',
+    },
     guildId: {
       type: DataTypes.STRING,
       field: 'guild_id',
