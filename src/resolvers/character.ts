@@ -1,5 +1,3 @@
-import Sequelize from 'sequelize';
-
 async function getCharacter(charModel) {
   const charData = charModel.get({ plain: true });
   const charProfile = await charModel.getCharacterProfile();
