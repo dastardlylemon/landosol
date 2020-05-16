@@ -34,6 +34,17 @@ export default gql`
     enableDonation: Int
     accuracy: Float
     picture: String
+    recipe: EquipmentRecipe @cacheControl(maxAge: 300)
+  }
+
+  type EquipmentIngredient {
+    amount: Int
+    equipment: Equipment
+  }
+
+  type EquipmentRecipe {
+    cost: Int
+    equipments: [EquipmentIngredient!]
   }
 `;
 

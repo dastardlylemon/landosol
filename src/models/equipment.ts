@@ -103,9 +103,9 @@ const equipment = (sequelize, DataTypes) => {
     tableName: 'equipment_data',
   });
 
-  // CharacterProfile.associate = (models) => {
-  //   CharacterProfile.belongsTo(models.Character, { foreignKey: 'unit_id' });
-  // };
+  Equipment.associate = (models) => {
+    Equipment.hasOne(models.EquipmentRecipe, { foreignKey: 'id' });
+  };
 
   return Equipment;
 };
