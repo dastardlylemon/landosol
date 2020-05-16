@@ -13,6 +13,7 @@ console.log(__dirname);
 const models = {
   Character: sequelize.import('./character'),
   CharacterProfile: sequelize.import('./characterProfile'),
+  Enemy: sequelize.import('./enemy'),
   Guild: sequelize.import('./guild'),
 };
 

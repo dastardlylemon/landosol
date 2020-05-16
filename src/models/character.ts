@@ -33,8 +33,6 @@ const character = (sequelize, DataTypes) => {
     tableName: 'unit_data',
   });
 
-
-
   Character.associate = (models) => {
     Character.hasOne(models.CharacterProfile, { foreignKey: 'unit_id' });
   };

@@ -1,5 +1,6 @@
 import { gql } from 'apollo-server-express';
 import characterSchema from './character';
+import enemySchema from './enemy';
 import guildSchema from './guild';
 
 const linkSchema = gql`
@@ -8,5 +9,10 @@ const linkSchema = gql`
   }
 `;
 
-export default [linkSchema, characterSchema, guildSchema];
+export default [
+  linkSchema,
+  characterSchema,
+  enemySchema,
+  guildSchema,
+];
 
