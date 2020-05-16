@@ -1,5 +1,41 @@
-const equipmentRecipe = (sequelize, DataTypes) => {
-  const EquipmentRecipe = sequelize.define('equipmentRecipe', {
+import { Sequelize, Model } from 'sequelize';
+import { AssociatedModel, SequelizeDataTypes } from '../types';
+
+export interface EquipmentRecipeAttributes extends Model {
+  id: number;
+  cost: number;
+  equipmentId1: number;
+  consumeAmount1: number;
+  equipmentId2: number;
+  consumeAmount2: number;
+  equipmentId3: number;
+  consumeAmount3: number;
+  equipmentId4: number;
+  consumeAmount4: number;
+  equipmentId5: number;
+  consumeAmount5: number;
+  equipmentId6: number;
+  consumeAmount6: number;
+  equipmentId7: number;
+  consumeAmount7: number;
+  equipmentId8: number;
+  consumeAmount8: number;
+  equipmentId9: number;
+  consumeAmount9: number;
+  equipmentId10: number;
+  consumeAmount10: number;
+  equipments: [{
+    amount: number;
+    equipmentId: number;
+  }];
+};
+
+export type EquipmentRecipeModel = AssociatedModel & {
+  new(): EquipmentRecipeAttributes;
+};
+
+const equipmentRecipe = (sequelize: Sequelize, DataTypes: SequelizeDataTypes) => {
+  const EquipmentRecipe = <EquipmentRecipeModel>sequelize.define('equipmentRecipe', {
     id: {
       type: DataTypes.INTEGER,
       field: 'equipment_id',
@@ -91,7 +127,7 @@ const equipmentRecipe = (sequelize, DataTypes) => {
     },
     equipments: {
       type: DataTypes.VIRTUAL,
-      get() {
+      get(this: any) {
         const ingredients = [];
         for (let i: number = 0; i < 10; i++) {
           const equipmentId = this.getDataValue(`equipmentId${i + 1}`);

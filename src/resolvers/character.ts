@@ -1,4 +1,7 @@
-async function getCharacter(charModel) {
+import { CharacterAttributes } from '../models/character';
+import { Resolvers } from '../types';
+
+async function getCharacter(charModel: CharacterAttributes) {
   const charData = charModel.get({ plain: true });
   const charProfile = await charModel.getCharacterProfile();
   return {
@@ -7,7 +10,7 @@ async function getCharacter(charModel) {
   };
 }
 
-export default {
+const resolvers: Resolvers = {
   Query: {
     character: async (_, { id }: { id: string }, { models }) => {
       const charModel = await models.Character.findByPk(id);
@@ -27,3 +30,4 @@ export default {
   },
 };
 
+export default resolvers;

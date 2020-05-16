@@ -1,5 +1,44 @@
-const equipment = (sequelize, DataTypes) => {
-  const Equipment = sequelize.define('equipment', {
+import { Sequelize, Model, HasOneGetAssociationMixin } from 'sequelize';
+import { AssociatedModel, SequelizeDataTypes } from '../types';
+import { EquipmentRecipeAttributes } from './equipmentRecipe';
+
+export interface EquipmentAttributes extends Model {
+  id: number;
+  name: string;
+  description: string;
+  promotionLevel: number;
+  isCrafted: number;
+  equipmentEnhancePoint: number;
+  salePrice: number;
+  requireLevel: number;
+  hp: number;
+  attack: number;
+  magicAttack: number;
+  defense: number;
+  magicDefense: number;
+  critical: number;
+  magicCritical: number;
+  waveHpRecovery: number;
+  waveEnergyRecovery: number;
+  dodge: number;
+  penetrate: number;
+  magicPenetrate: number;
+  lifeSteal: number;
+  hpRecoveryRate: number;
+  energyRecoveryRate: number;
+  energyReduceRate: number;
+  enableDonation: number;
+  accuracy: number;
+  picture: number;
+  getEquipmentRecipe: HasOneGetAssociationMixin<EquipmentRecipeAttributes>;
+};
+
+export type EquipmentModel = AssociatedModel & {
+  new(): EquipmentAttributes;
+};
+
+const equipment = (sequelize: Sequelize, DataTypes: SequelizeDataTypes) => {
+  const Equipment = <EquipmentModel>sequelize.define('equipment', {
     id: {
       type: DataTypes.INTEGER,
       field: 'equipment_id',
@@ -95,7 +134,7 @@ const equipment = (sequelize, DataTypes) => {
     accuracy: DataTypes.REAL,
     picture: {
       type: DataTypes.VIRTUAL,
-      get(): string {
+      get(this: any): string {
         return `https://redive.estertion.win/icon/equipment/${this.getDataValue('id')}.webp`;
       },
     },

@@ -1,15 +1,14 @@
-import Sequelize from 'sequelize';
+import { EnemyAttributes } from '../models/enemy';
+import { Resolvers } from '../types';
 
-async function getEnemy(enemyModel) {
+async function getEnemy(enemyModel: EnemyAttributes) {
   const enemyData = enemyModel.get({ plain: true });
-  // const charProfile = await charModel.getCharacterProfile();
   return {
     ...enemyData,
-    // ...(charProfile?.get({ plain: true }) || []),
   };
 }
 
-export default {
+const resolvers: Resolvers = {
   Query: {
     enemy: async (_, { id }: { id: string }, { models }) => {
       const enemyModel = await models.Enemy.findByPk(id);
@@ -21,11 +20,6 @@ export default {
       return await Promise.all(res);
     },
   },
-
-//   Character: {
-//     guild: async (character, _, { models }) => {
-//       return await models.Guild.findByPk(character.guildId);
-//     },
-//   },
 };
 
+export default resolvers;

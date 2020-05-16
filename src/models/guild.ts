@@ -1,5 +1,18 @@
-const guild = (sequelize, DataTypes) => {
-  const Guild = sequelize.define('guild', {
+import { Sequelize, Model } from 'sequelize';
+import { AssociatedModel, SequelizeDataTypes } from '../types';
+
+export interface GuildAttributes extends Model {
+  id: number;
+  name: string;
+  description: string;
+};
+
+export type GuildModel = AssociatedModel & {
+  new(): GuildAttributes;
+};
+
+const guild = (sequelize: Sequelize, DataTypes: SequelizeDataTypes) => {
+  const Guild = <GuildModel>sequelize.define('guild', {
     id: {
       type: DataTypes.INTEGER,
       field: 'guild_id',

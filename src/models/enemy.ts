@@ -1,5 +1,27 @@
-const enemy = (sequelize, DataTypes) => {
-  const Enemy = sequelize.define('enemy', {
+import { Sequelize, Model } from 'sequelize';
+import { SequelizeDataTypes } from '../types';
+
+export interface EnemyAttributes extends Model {
+  id: number;
+  name: string;
+  seType: number;
+  motionType: number;
+  moveSpeed: number;
+  searchAreaWidth: number;
+  attackType: number;
+  normalAttackCastTime: number;
+  visualChangeFlag: number;
+  comment: string;
+  prefabId: number;
+  picture: string;
+};
+
+export type EnemyModel = typeof Model & {
+  new(): EnemyAttributes;
+};
+
+const enemy = (sequelize: Sequelize, DataTypes: SequelizeDataTypes) => {
+  const Enemy = <EnemyModel>sequelize.define('enemy', {
     id: {
       type: DataTypes.INTEGER,
       field: 'unit_id',
@@ -44,7 +66,7 @@ const enemy = (sequelize, DataTypes) => {
     },
     picture: {
       type: DataTypes.VIRTUAL,
-      get(): string {
+      get(this: any): string {
         const isShadow = this.getDataValue('visualChangeFlag') === 1;
         const path = isShadow ? 'unit_shadow' : 'unit';
         const offset = isShadow ? 10 : 0;
@@ -54,11 +76,6 @@ const enemy = (sequelize, DataTypes) => {
   }, {
     tableName: 'unit_enemy_data',
   });
-
-
-  // Character.associate = (models) => {
-  //   Character.hasOne(models.CharacterProfile, { foreignKey: 'unit_id' });
-  // };
 
   return Enemy;
 };

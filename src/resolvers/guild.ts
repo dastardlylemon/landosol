@@ -1,4 +1,6 @@
-export default {
+import { Resolvers } from '../types';
+
+const resolvers: Resolvers = {
   Query: {
     guild: async (_, { id }: { id: string }, { models }) => {
       return await models.Guild.findByPk(id);
@@ -23,3 +25,4 @@ export default {
   },
 };
 
+export default resolvers;

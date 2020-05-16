@@ -1,5 +1,32 @@
-const character = (sequelize, DataTypes) => {
-  const Character = sequelize.define('character', {
+import { Sequelize, Model, HasOneGetAssociationMixin } from 'sequelize';
+import { AssociatedModel, SequelizeDataTypes } from '../types';
+import { CharacterProfileAttributes } from './characterProfile';
+
+export interface CharacterAttributes extends Model {
+  id: number;
+  name: string;
+  seType: number;
+  motionType: number;
+  moveSpeed: number;
+  searchAreaWidth: number;
+  attackType: number;
+  normalAttackCastTime: number;
+  visualChangeFlag: number;
+  comment: string;
+  prefabId: number;
+  picture: string;
+  kanaName: string;
+  isLimited: number;
+  rarity: number;
+  getCharacterProfile: HasOneGetAssociationMixin<CharacterProfileAttributes>;
+};
+
+export type CharacterModel = AssociatedModel & {
+  new(): CharacterAttributes;
+};
+
+const character = (sequelize: Sequelize, DataTypes: SequelizeDataTypes) => {
+  const Character = <CharacterModel>sequelize.define('character', {
     id: {
       type: DataTypes.INTEGER,
       field: 'unit_id',
@@ -49,7 +76,7 @@ const character = (sequelize, DataTypes) => {
     },
     picture: {
       type: DataTypes.VIRTUAL,
-      get(): string {
+      get(this: any): string {
         return `https://redive.estertion.win/icon/unit/${this.getDataValue('prefabId') + 10}.webp`;
       },
     },

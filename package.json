@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@types/sequelize": "^4.28.9",
     "apollo-server": "^2.13.1",
     "apollo-server-express": "^2.13.1",
     "cors": "^2.8.5",
