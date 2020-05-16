@@ -1,4 +1,5 @@
 import { Sequelize } from 'sequelize';
+import { Models } from '../types';
 
 const sequelize = new Sequelize({
   dialect: 'sqlite',
@@ -8,7 +9,7 @@ const sequelize = new Sequelize({
   },
 });
 
-const models = {
+const models: Models = {
   Character: sequelize.import('./character'),
   CharacterProfile: sequelize.import('./characterProfile'),
   Enemy: sequelize.import('./enemy'),

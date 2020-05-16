@@ -1,4 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
+import DataLoader from 'dataloader';
 
 export type SequelizeDataTypes = typeof DataTypes;
 
@@ -10,8 +11,13 @@ export type Models = {
   [key: string]: any;
 };
 
+export type Loaders = {
+  [key: string]: DataLoader<any, any>;
+};
+
 export interface Context {
   models: Models;
+  loaders: Loaders;
 }
 
 export type ResolverFn = (parent: any, args: any, ctx: Context) => any;

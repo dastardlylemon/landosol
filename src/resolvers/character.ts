@@ -1,9 +1,10 @@
 import { CharacterAttributes } from '../models/character';
-import { Resolvers } from '../types';
+import { Resolvers, Loaders } from '../types';
 
-async function getCharacter(charModel: CharacterAttributes) {
+async function getCharacter(charModel: CharacterAttributes, loaders: Loaders) {
   const charData = charModel.get({ plain: true });
-  const charProfile = await charModel.getCharacterProfile();
+  const charProfile = await loaders.characterProfile.load(charData.id);
+  // console.log(charProfile);
   return {
     ...charData,
     ...(charProfile?.get({ plain: true }) || []),
@@ -12,20 +13,23 @@ async function getCharacter(charModel: CharacterAttributes) {
 
 const resolvers: Resolvers = {
   Query: {
-    character: async (_, { id }: { id: string }, { models }) => {
+    character: async (_, { id }: { id: string }, { models, loaders }) => {
       const charModel = await models.Character.findByPk(id);
-      return await getCharacter(charModel);
+      return await getCharacter(charModel, loaders);
     },
-    characters: async (_1, _2, { models }) => {
+    characters: async (_1, _2, { models, loaders }) => {
       const charModels = await models.Character.findAll();
-      const res = charModels.map(getCharacter);
+      const res = charModels.map((charModel: CharacterAttributes) => getCharacter(charModel, loaders));
       return await Promise.all(res);
     },
   },
 
   Character: {
-    guild: async (character, _, { models }) => {
-      return await models.Guild.findByPk(character.guildId);
+    guild: async (character, _, { loaders }) => {
+      if (character.guildId) {
+        return await loaders.guild.load(character.guildId);
+      }
+      return null;
     },
   },
 };
