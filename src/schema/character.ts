@@ -6,9 +6,18 @@ export default gql`
     characters: [Character!]
   }
 
-  type Character {
+  type Character implements Unit {
     id: ID!
     name: String!
+    motionType: Int
+    moveSpeed: Int
+    seType: Int
+    searchAreaWidth: Int
+    attackType: Int
+    normalAttackCastTime: Float
+    comment: String
+    picture: String
+
     kanaName: String
     age: String
     guild: Guild
@@ -20,7 +29,6 @@ export default gql`
     favorite: String
     voice: String
     catchCopy: String
-    picture: String
   }
 `;
 

@@ -1,12 +1,7 @@
 import { gql } from 'apollo-server-express';
 
 export default gql`
-  extend type Query {
-    enemy(id: ID!): Enemy
-    enemies: [Enemy!]
-  }
-
-  type Enemy implements Unit {
+  interface Unit {
     id: ID!
     name: String!
     motionType: Int
@@ -17,8 +12,6 @@ export default gql`
     normalAttackCastTime: Float
     comment: String
     picture: String
-
-    visualChangeFlag: Int
   }
 `;
 

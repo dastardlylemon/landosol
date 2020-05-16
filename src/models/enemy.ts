@@ -13,6 +13,10 @@ const enemy = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       field: 'se_type',
     },
+    motionType: {
+      type: DataTypes.INTEGER,
+      field: 'motion_type',
+    },
     moveSpeed: {
       type: DataTypes.INTEGER,
       field: 'move_speed',
