@@ -2,9 +2,8 @@ import { CharacterAttributes } from '../models/character';
 import { Resolvers, Loaders } from '../types';
 
 async function getCharacter(charModel: CharacterAttributes, loaders: Loaders) {
-  const charData = charModel.get({ plain: true });
+  const charData = charModel.get({ plain: true }) as CharacterAttributes;
   const charProfile = await loaders.characterProfile.load(charData.id);
-  // console.log(charProfile);
   return {
     ...charData,
     ...(charProfile?.get({ plain: true }) || []),

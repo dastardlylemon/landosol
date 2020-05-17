@@ -18,8 +18,10 @@ const server = new ApolloServer({
   context: {
     models,
     loaders: {
-      guild: new DataLoader((keys) => loaders.batchGuilds(keys, models)),
       characterProfile: new DataLoader((keys) => loaders.batchCharacterProfiles(keys, models)),
+      equipment: new DataLoader((keys) => loaders.batchEquipments(keys, models)),
+      equipmentRecipe: new DataLoader((keys) => loaders.batchEquipmentRecipes(keys, models)),
+      guild: new DataLoader((keys) => loaders.batchGuilds(keys, models)),
     },
   },
 });

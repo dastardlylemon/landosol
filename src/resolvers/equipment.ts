@@ -1,20 +1,20 @@
 import { EquipmentAttributes } from '../models/equipment';
 import { EquipmentRecipeAttributes } from '../models/equipmentRecipe';
-import { Models, Resolvers } from '../types';
+import { Loaders, Resolvers } from '../types';
 
-async function getEquipment(equipmentModel: EquipmentAttributes, models: Models): Promise<any> {
-  const equipmentData  = equipmentModel.get({ plain: true });
-  const recipe = await equipmentModel.getEquipmentRecipe();
+async function getEquipment(equipmentModel: EquipmentAttributes, loaders: Loaders): Promise<any> {
+  const equipmentData  = equipmentModel.get({ plain: true }) as EquipmentAttributes;
+  const recipe = await loaders.equipmentRecipe.load(equipmentData.id);
   let ingredients = null;
   if (recipe) {
     const recipeModel = recipe.get({ plain: true }) as EquipmentRecipeAttributes;
     ingredients = recipeModel
       .equipments
       .map(async ({ amount, equipmentId }) => {
-        const equipment = await models.Equipment.findByPk(equipmentId);
+        const equipment = await loaders.equipment.load(equipmentId);
         return {
           amount,
-          equipment: await getEquipment(equipment, models),
+          equipment: await getEquipment(equipment, loaders),
         };
       });
   }
@@ -31,14 +31,13 @@ async function getEquipment(equipmentModel: EquipmentAttributes, models: Models)
 
 const resolvers: Resolvers = {
   Query: {
-    equipment: async (_, { id }: { id: string }, { models }) => {
-      const equipmentModel = await models.Equipment.findByPk(id);
-      const eq = await getEquipment(equipmentModel, models);
-      return await getEquipment(equipmentModel, models);
+    equipment: async (_, { id }: { id: string }, { loaders }) => {
+      const equipmentModel = await loaders.equipment.load(id);
+      return await getEquipment(equipmentModel, loaders);
     },
-    equipments: async (_1, _2, { models }) => {
+    equipments: async (_1, _2, { models, loaders }) => {
       const equipmentModels = await models.Equipment.findAll();
-      const res = equipmentModels.map((equipment: EquipmentAttributes) => getEquipment(equipment, models));
+      const res = equipmentModels.map((equipment: EquipmentAttributes) => getEquipment(equipment, loaders));
       return await Promise.all(res);
     },
   },
