@@ -9,11 +9,16 @@ export interface QuestAttributes extends Model {
   unitExperience: number;
   love: number;
   dailyLimit: number;
+  waveId1: number;
+  waveId2: number;
+  waveId3: number;
 };
 
 export type QuestModel = typeof Model & {
   new(): QuestAttributes;
 };
+
+const MAX_WAVES = 3;
 
 const quest = (sequelize: Sequelize, DataTypes: SequelizeDataTypes) => {
   const Quest = <QuestModel>sequelize.define('quest', {
@@ -39,6 +44,31 @@ const quest = (sequelize: Sequelize, DataTypes: SequelizeDataTypes) => {
     dailyLimit: {
       type: DataTypes.INTEGER,
       field: 'daily_limit',
+    },
+    waveId1: {
+      type: DataTypes.INTEGER,
+      field: 'wave_group_id_1',
+    },
+    waveId2: {
+      type: DataTypes.INTEGER,
+      field: 'wave_group_id_2',
+    },
+    waveId3: {
+      type: DataTypes.INTEGER,
+      field: 'wave_group_id_3',
+    },
+    waves: {
+      type: DataTypes.VIRTUAL,
+      get(this: any) {
+        const waveIds = [];
+        for (let i: number = 0; i < MAX_WAVES; i++) {
+          const waveId = this.getDataValue(`waveId${i + 1}`);
+          if (waveId) {
+            waveIds.push(waveId);
+          }
+        }
+        return waveIds;
+      },
     },
   }, {
     tableName: 'quest_data',

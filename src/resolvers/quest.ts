@@ -1,4 +1,5 @@
 import { Resolvers } from '../types';
+import { WaveAttributes } from '../models/wave';
 
 const resolvers: Resolvers = {
   Query: {
@@ -12,7 +13,26 @@ const resolvers: Resolvers = {
 
   Quest: {
     waves: async (quest, _, { models }) => {
-      return null;
+      console.log(quest.waves);
+      const waveModels = await models.Wave.findAll({
+        where: {
+          id: quest.waves,
+        },
+      }) as WaveAttributes[];
+      const waveData = waveModels.map(async (wave) => {
+        const enemies = await models.Enemy.findAll({
+          where: {
+            id: wave.enemies,
+          },
+        });
+
+        console.log(wave.enemies);
+        return {
+          id: wave.id,
+          enemies,
+        };
+      });
+      return await Promise.all(waveData);
     },
   },
 };

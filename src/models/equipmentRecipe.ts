@@ -24,10 +24,10 @@ export interface EquipmentRecipeAttributes extends Model {
   consumeAmount9: number;
   equipmentId10: number;
   consumeAmount10: number;
-  equipments: [{
+  equipments: {
     amount: number;
     equipmentId: number;
-  }];
+  }[];
 };
 
 export type EquipmentRecipeModel = AssociatedModel & {
