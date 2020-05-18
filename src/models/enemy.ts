@@ -1,5 +1,6 @@
-import { Sequelize, Model } from 'sequelize';
-import { SequelizeDataTypes } from '../types';
+import { Sequelize, Model, HasManyGetAssociationsMixin } from 'sequelize';
+import { AssociatedModel, SequelizeDataTypes } from '../types';
+import { EnemyInstanceAttributes } from './enemyInstance';
 
 export interface EnemyAttributes extends Model {
   id: number;
@@ -14,9 +15,10 @@ export interface EnemyAttributes extends Model {
   comment: string;
   prefabId: number;
   picture: string;
+  getEnemyInstances: HasManyGetAssociationsMixin<EnemyInstanceAttributes>;
 };
 
-export type EnemyModel = typeof Model & {
+export type EnemyModel = AssociatedModel & {
   new(): EnemyAttributes;
 };
 
@@ -76,6 +78,10 @@ const enemy = (sequelize: Sequelize, DataTypes: SequelizeDataTypes) => {
   }, {
     tableName: 'unit_enemy_data',
   });
+
+  Enemy.associate = (models) => {
+    Enemy.hasMany(models.EnemyInstance, { foreignKey: 'unit_id' });
+  };
 
   return Enemy;
 };

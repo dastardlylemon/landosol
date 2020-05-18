@@ -14,6 +14,7 @@ const models: Models = {
   CharacterProfile: sequelize.import('./characterProfile'),
   CharacterPromotion: sequelize.import('./characterPromotion'),
   Enemy: sequelize.import('./enemy'),
+  EnemyInstance: sequelize.import('./enemyInstance'),
   Equipment: sequelize.import('./equipment'),
   EquipmentRecipe: sequelize.import('./equipmentRecipe'),
   Guild: sequelize.import('./guild'),
