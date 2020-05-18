@@ -17,6 +17,7 @@ const models: Models = {
   Equipment: sequelize.import('./equipment'),
   EquipmentRecipe: sequelize.import('./equipmentRecipe'),
   Guild: sequelize.import('./guild'),
+  Quest: sequelize.import('./quest'),
 };
 
 Object.keys(models).forEach(key => {

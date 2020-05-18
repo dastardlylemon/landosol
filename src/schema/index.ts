@@ -3,6 +3,7 @@ import characterSchema from './character';
 import enemySchema from './enemy';
 import equipmentSchema from './equipment';
 import guildSchema from './guild';
+import questSchema from './quest';
 import unitSchema from './unit';
 
 const linkSchema = gql`
@@ -17,6 +18,7 @@ export default [
   enemySchema,
   equipmentSchema,
   guildSchema,
+  questSchema,
   unitSchema,
 ];
 
