@@ -1,6 +1,4 @@
 import { Resolvers } from '../types';
-import { EnemyInstanceAttributes } from '../models/enemyInstance';
-import { WaveAttributes } from '../models/wave';
 
 const resolvers: Resolvers = {
   Query: {
@@ -13,20 +11,12 @@ const resolvers: Resolvers = {
   },
 
   Quest: {
-    waves: async (quest, _, { models }) => {
-      const waveModels = await models.Wave.findAll({
-        where: {
-          id: quest.waves,
-        },
-      }) as WaveAttributes[];
+    waves: async (quest, _, { loaders }) => {
+      const waveModels = await loaders.wave.loadMany(quest.waves);
       const waveData = waveModels.map(async (wave) => {
-        const enemyInstances = await models.EnemyInstance.findAll({
-          where: {
-            id: wave.enemies,
-          },
-        }) as EnemyInstanceAttributes[];
-        const enemies = enemyInstances.map(async (enemy) => {
-          const enemyModel = await enemy.getEnemy();
+        const enemyInstances = await loaders.enemyInstance.loadMany(wave.enemies);
+        const enemies = enemyInstances.map(async (enemyInstance) => {
+          const enemyModel = await loaders.enemy.load(enemyInstance.unitId);
           return enemyModel.get({ plain: true });
         });
 

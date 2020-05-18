@@ -20,9 +20,12 @@ const server = new ApolloServer({
     loaders: {
       characterProfile: new DataLoader((keys) => loaders.batchCharacterProfiles(keys, models)),
       characterPromotion: new DataLoader((keys) => loaders.batchCharacterPromotions(keys, models)),
+      enemy: new DataLoader((keys) => loaders.batchEnemies(keys, models)),
+      enemyInstance: new DataLoader((keys) => loaders.batchEnemyInstances(keys, models)),
       equipment: new DataLoader((keys) => loaders.batchEquipments(keys, models)),
       equipmentRecipe: new DataLoader((keys) => loaders.batchEquipmentRecipes(keys, models)),
       guild: new DataLoader((keys) => loaders.batchGuilds(keys, models)),
+      wave: new DataLoader((keys) => loaders.batchWaves(keys, models)),
     },
   },
 });
