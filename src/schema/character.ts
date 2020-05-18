@@ -29,6 +29,13 @@ export default gql`
     favorite: String
     voice: String
     catchCopy: String
+
+    promotions: [Promotion!]
+  }
+
+  type Promotion {
+    level: Int
+    equipments: [Equipment!]
   }
 `;
 

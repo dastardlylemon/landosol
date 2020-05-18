@@ -12,6 +12,7 @@ const sequelize = new Sequelize({
 const models: Models = {
   Character: sequelize.import('./character'),
   CharacterProfile: sequelize.import('./characterProfile'),
+  CharacterPromotion: sequelize.import('./characterPromotion'),
   Enemy: sequelize.import('./enemy'),
   Equipment: sequelize.import('./equipment'),
   EquipmentRecipe: sequelize.import('./equipmentRecipe'),

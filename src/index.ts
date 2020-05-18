@@ -19,6 +19,7 @@ const server = new ApolloServer({
     models,
     loaders: {
       characterProfile: new DataLoader((keys) => loaders.batchCharacterProfiles(keys, models)),
+      characterPromotion: new DataLoader((keys) => loaders.batchCharacterPromotions(keys, models)),
       equipment: new DataLoader((keys) => loaders.batchEquipments(keys, models)),
       equipmentRecipe: new DataLoader((keys) => loaders.batchEquipmentRecipes(keys, models)),
       guild: new DataLoader((keys) => loaders.batchGuilds(keys, models)),

@@ -34,6 +34,8 @@ export type EquipmentRecipeModel = AssociatedModel & {
   new(): EquipmentRecipeAttributes;
 };
 
+const MAX_INGREDIENTS = 10;
+
 const equipmentRecipe = (sequelize: Sequelize, DataTypes: SequelizeDataTypes) => {
   const EquipmentRecipe = <EquipmentRecipeModel>sequelize.define('equipmentRecipe', {
     id: {
@@ -129,7 +131,7 @@ const equipmentRecipe = (sequelize: Sequelize, DataTypes: SequelizeDataTypes) =>
       type: DataTypes.VIRTUAL,
       get(this: any) {
         const ingredients = [];
-        for (let i: number = 0; i < 10; i++) {
+        for (let i: number = 0; i < MAX_INGREDIENTS; i++) {
           const equipmentId = this.getDataValue(`equipmentId${i + 1}`);
           const consumeAmount = this.getDataValue(`consumeAmount${i + 1}`);
           if (equipmentId && consumeAmount) {

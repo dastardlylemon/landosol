@@ -1,6 +1,7 @@
-import { Sequelize, Model, HasOneGetAssociationMixin } from 'sequelize';
+import { Sequelize, Model, HasOneGetAssociationMixin, HasManyGetAssociationsMixin } from 'sequelize';
 import { AssociatedModel, SequelizeDataTypes } from '../types';
 import { CharacterProfileAttributes } from './characterProfile';
+import { CharacterPromotionAttributes } from './characterPromotion';
 
 export interface CharacterAttributes extends Model {
   id: number;
@@ -19,6 +20,7 @@ export interface CharacterAttributes extends Model {
   isLimited: number;
   rarity: number;
   getCharacterProfile: HasOneGetAssociationMixin<CharacterProfileAttributes>;
+  getCharacterPromotions: HasManyGetAssociationsMixin<CharacterPromotionAttributes>
 };
 
 export type CharacterModel = AssociatedModel & {
@@ -86,6 +88,7 @@ const character = (sequelize: Sequelize, DataTypes: SequelizeDataTypes) => {
 
   Character.associate = (models) => {
     Character.hasOne(models.CharacterProfile, { foreignKey: 'unit_id' });
+    Character.hasMany(models.CharacterPromotion, { foreignKey: 'unit_id' });
   };
 
   return Character;

@@ -2,7 +2,7 @@ import { EquipmentAttributes } from '../models/equipment';
 import { EquipmentRecipeAttributes } from '../models/equipmentRecipe';
 import { Loaders, Resolvers } from '../types';
 
-async function getEquipment(equipmentModel: EquipmentAttributes, loaders: Loaders): Promise<any> {
+export async function getEquipment(equipmentModel: EquipmentAttributes, loaders: Loaders): Promise<any> {
   const equipmentData  = equipmentModel.get({ plain: true }) as EquipmentAttributes;
   const recipe = await loaders.equipmentRecipe.load(equipmentData.id);
   let ingredients = null;
